@@ -1,0 +1,104 @@
+{% extends 'produk/layout.html' %} {% block content %}
+<div class="page-header">
+  <div class="page-header-left d-flex align-items-center">
+    <div class="page-header-title">
+      <h5 class="m-b-10">Master Kategori</h5>
+    </div>
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'produk_list' %}">Home</a>
+      </li>
+      <li class="breadcrumb-item">Master Kategori</li>
+    </ul>
+  </div>
+  <div class="page-header-right ms-auto">
+    <a href="{% url 'kategori_tambah' %}" class="btn btn-primary">
+      <i class="feather-plus me-2"></i>Tambah Kategori
+    </a>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="card stretch stretch-full">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover" id="katTable">
+          <thead>
+            <tr>
+              <th class="wd-30">No</th>
+              <th>Nama Kategori</th>
+              <th class="text-end">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for k in kategori %}
+            <tr>
+              <td>
+                <span class="text-muted">{{ forloop.counter }}</span>
+              </td>
+              <td><strong>{{ k.nama_kategori }}</strong></td>
+              <td class="text-end">
+                <div class="hstack gap-2 justify-content-end">
+                  <a
+                    href="{% url 'kategori_edit' k.id %}"
+                    class="avatar-text avatar-md bg-soft-warning text-warning">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a
+                    href="javascript:void(0)"
+                    class="avatar-text avatar-md bg-soft-danger text-danger btn-delete-kat"
+                    data-id="{{ k.id }}"
+                    data-nama="{{ k.nama_kategori }}">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="3" class="text-center py-5 text-muted">
+                Belum ada data kategori.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function () {
+    // Init DataTable
+    $("#katTable").DataTable({
+      language: {
+        search: "Cari Kategori:",
+        lengthMenu: "Tampilkan _MENU_ data",
+        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+      },
+    });
+
+    // SweetAlert Delete dengan Nama Kategori
+    $(".btn-delete-kat").on("click", function () {
+      const id = $(this).data("id");
+      const nama = $(this).data("nama");
+
+      Swal.fire({
+        title: "Hapus Kategori?",
+        html: `Apakah Anda yakin ingin menghapus kategori <strong>${nama}</strong>?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: "Batal",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Mengarah ke URL hapus kategori
+          window.location.href = "/kategori/hapus/" + id + "/";
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

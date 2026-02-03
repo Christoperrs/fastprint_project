@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Aplikasi Manajemen Produk Fastprint" />
+    <title>Fastprint || Manajemen Produk</title>
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'produk/assets/images/favicon.ico' %}" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/css/bootstrap.min.css' %}" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/vendors/css/vendors.min.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/vendors/css/dataTables.bs5.min.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/vendors/css/select2.min.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/vendors/css/select2-theme.min.css' %}" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'produk/assets/css/theme.min.css' %}" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  </head>
+
+  <body>
+    <nav class="nxl-navigation">
+      <div class="navbar-wrapper">
+        <div class="m-header">
+          <a href="{% url 'dashboard_crm' %}" class="b-brand">
+            <div class="logo logo-lg d-flex align-items-center gap-2">
+              <div class="avatar-text avatar-sm bg-primary text-white rounded">
+                <i class="feather-trending-up"></i>
+              </div>
+              <span
+                class="fw-bold fs-18 text-white text-uppercase tracking-wider"
+                >Fast<span class="text-primary">CRM</span></span
+              >
+            </div>
+
+            <div class="logo logo-sm">
+              <div class="avatar-text avatar-md bg-primary text-white rounded">
+                <i class="feather-trending-up"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="navbar-content">
+          <ul class="nxl-navbar">
+            <li class="nxl-item nxl-caption">
+              <label>Menu Utama</label>
+            </li>
+            <li class="nxl-item">
+              <a href="{% url 'dashboard_crm' %}" class="nxl-link">
+                <span class="nxl-micon"><i class="feather-airplay"></i></span>
+                <span class="nxl-mtext">Dashboard</span>
+              </a>
+            </li>
+            <li class="nxl-item">
+              <a href="{% url 'kategori_list' %}" class="nxl-link">
+                <span class="nxl-micon"><i class="feather-grid"></i></span>
+                <span class="nxl-mtext">Kategori</span>
+              </a>
+            </li>
+            <li class="nxl-item nxl-hasmenu">
+              <a href="{% url 'produk_list' %}" class="nxl-link">
+                <span class="nxl-micon"><i class="feather-box"></i></span>
+                <span class="nxl-mtext">Data Produk</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="nxl-header">
+      <div class="header-wrapper">
+        <!--! [Start] Header Left !-->
+        <div class="header-left d-flex align-items-center gap-4">
+          <!--! [Start] nxl-head-mobile-toggler !-->
+          <a
+            href="javascript:void(0);"
+            class="nxl-head-mobile-toggler"
+            id="mobile-collapse">
+            <div class="hamburger hamburger--arrowturn">
+              <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+              </div>
+            </div>
+          </a>
+          <!--! [Start] nxl-head-mobile-toggler !-->
+          <!--! [Start] nxl-navigation-toggle !-->
+          <div class="nxl-navigation-toggle">
+            <a href="javascript:void(0);" id="menu-mini-button">
+              <i class="feather-align-left"></i>
+            </a>
+            <a
+              href="javascript:void(0);"
+              id="menu-expend-button"
+              style="display: none">
+              <i class="feather-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+        <!--! [End] Header Left !-->
+        <!--! [Start] Header Right !-->
+        <div class="header-right ms-auto">
+          <div class="d-flex align-items-center">
+            <div class="nxl-h-item d-none d-sm-flex">
+              <div class="full-screen-switcher">
+                <a
+                  href="javascript:void(0);"
+                  class="nxl-head-link me-0"
+                  onclick="$('body').fullScreenHelper('toggle');">
+                  <i class="feather-maximize maximize"></i>
+                  <i class="feather-minimize minimize"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="dropdown nxl-h-item">
+              <a
+                href="javascript:void(0);"
+                data-bs-toggle="dropdown"
+                role="button"
+                data-bs-auto-close="outside">
+                <img
+                  src="{% static 'produk/assets/images/avatar/FotoDiri.png' %}"
+                  alt="user-image"
+                  class="img-fluid user-avtar me-0" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="nxl-container">
+      <div class="nxl-content">
+        {% if messages %} {% for message in messages %}
+        <div
+          class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show mx-4 mt-4"
+          role="alert">
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"></button>
+        </div>
+        {% endfor %} {% endif %} {% block content %} {% endblock %}
+      </div>
+    </main>
+
+    <script src="{% static 'produk/assets/vendors/js/vendors.min.js' %}"></script>
+    <script src="{% static 'produk/assets/vendors/js/dataTables.min.js' %}"></script>
+    <script src="{% static 'produk/assets/vendors/js/dataTables.bs5.min.js' %}"></script>
+    <script src="{% static 'produk/assets/vendors/js/select2.min.js' %}"></script>
+    <script src="{% static 'produk/assets/vendors/js/select2-active.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% block script %} {% endblock %}
+  </body>
+</html>
