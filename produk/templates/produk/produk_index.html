@@ -155,8 +155,7 @@
       });
     });
 
-    // SweetAlert Delete dengan Nama Produk
-    $(".btn-delete").on("click", function () {
+    $(document).on("click", ".btn-delete", function () {
       const id = $(this).data("id");
       const nama = $(this).data("nama");
 
@@ -170,7 +169,8 @@
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "/hapus/" + id + "/";
+          // Arahkan ke URL hapus Django Anda
+          window.location.href = `/hapus/${id}/`;
         }
       });
     });

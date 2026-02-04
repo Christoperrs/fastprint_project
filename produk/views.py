@@ -46,6 +46,16 @@ def produk_edit(request, pk):
 
 # Hapus Produk
 def produk_hapus(request, pk):
+    """
+    Hapus produk berdasarkan pk yang diberikan.
+
+    Args:
+        request (Request): Objek request yang dikirimkan oleh client.
+        pk (int): Primary key dari produk yang ingin dihapus.
+
+    Returns:
+        Response: Redirect ke halaman list produk.
+    """
     produk = get_object_or_404(Produk, pk=pk)
     produk.delete()
     return redirect('produk_list')
@@ -53,6 +63,18 @@ def produk_hapus(request, pk):
 # Sinkronisasi Data dari API Fastprint
 def sync_api(request):
 
+    """
+    Syncronisasi data dari API Fastprint.
+
+    Fungsi ini digunakan untuk mengambil data produk terbaru dari API Fastprint,
+    lalu mengupdate data produk yang sudah ada di database.
+
+    Args:
+        request (Request): Objek request yang dikirimkan oleh client.
+
+    Returns:
+        Response: Redirect ke halaman list produk jika berhasil, atau JsonResponse jika gagal.
+    """
     now = datetime.now()
     jam = now.strftime('%H')
     
@@ -109,10 +131,19 @@ def sync_api(request):
         })  
     
 def kategori_list(request):
+    """
+    Menampilkan halaman list kategori produk.
+    """
     data_kategori = Kategori.objects.all()
     return render(request, 'produk/kategori_index.html', {'kategori': data_kategori})
 
 def kategori_tambah(request):
+    """
+    Menambah kategori produk baru.
+
+    Returns:
+        Render halaman form kategori produk dengan judul 'Tambah Kategori'.
+    """
     if request.method == "POST":
         form = KategoriForm(request.POST)
         if form.is_valid():

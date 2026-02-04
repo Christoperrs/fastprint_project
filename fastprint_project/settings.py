@@ -78,8 +78,8 @@ WSGI_APPLICATION = 'fastprint_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_programmer',  # <-- Nama database kamu di sini
-        'USER': 'postgres',       # Username default PostgreSQL
+        'NAME': 'db_programmer',  
+        'USER': 'postgres',       
         'PASSWORD': 'royale', 
         'HOST': '127.0.0.1',
         'PORT': '5432',
